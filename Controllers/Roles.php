@@ -9,6 +9,7 @@ class Roles extends Controllers
 
    public function index()
    {
+       $data['roles'] = $this->model->listRoles();
        $data['page_name'] = "Roles de usuarios";
        $this->views->getView($this,'index',$data);
    }
