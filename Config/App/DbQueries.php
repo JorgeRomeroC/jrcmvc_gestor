@@ -2,24 +2,34 @@
 
 class DbQueries extends Conexion
 {
-    private $conexion;
-    private $query;
-    private $values;
+    /*--------------------------------*/
+    /* Listar registros desde la base de datos o un solo registro */
+    /*--------------------------------*/
 
-    function __construct()
+    public static function listEqual($table,$params = [], $limit = null)
     {
-        $this->conexion = new Conexion();
-        $this->conexion = $this->conexion->conect();
-    }
-    /*--------------------------------*/
-    /* SELECCIONAR TODOS LOS REGISTROS */
-    /*--------------------------------*/
-    public function selectAll(string $query)
-    {
-        $this->query = $query;
-        $result = $this->conexion->prepare($this->query);
-        $result->execute();
-        $data = $result->fetchAll(PDO::FETCH_ASSOC);
-        return $data;
+        $col_values = "";
+        $limits = "";
+        if (!empty($params))
+        {
+            $col_values .= "WHERE";
+            foreach ($params as $key => $value)
+            {
+                $col_values .= " {$key} = :{$key} AND";
+            }
+            $col_values = substr($col_values,0,-3);
+        }
+        if($limit !== null)
+        {
+            $limits = " LIMIT {$limit}";
+        }
+        $stmt = "SELECT * FROM $table {$col_values}{$limits}";
+
+        //llamando al query
+        if(!$rows = parent::query($stmt, $params))
+        {
+            return false;
+        }
+        return $limit === 1 ? $rows[0] : $rows;
     }
 }
