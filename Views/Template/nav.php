@@ -41,6 +41,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="<?php echo base_url();?>/Roles" class="nav-link">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            Roles
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
